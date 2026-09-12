@@ -1,5 +1,5 @@
 // Service worker — 老虎斑 Tiger Stripe PWA. Bump CACHE_VERSION on every deploy (build.py does this automatically).
-const CACHE_VERSION = 'tigerstripe-20260912-090536';
+const CACHE_VERSION = 'tigerstripe-20260912-090952';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-512-maskable.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE_VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
