@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="老虎斑">
+<meta name="apple-mobile-web-app-title" content="老虎斑 Tiger Stripe">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -242,6 +242,7 @@ figure{margin:0}
 /* orig toggle */
 .origbar{display:flex;justify-content:flex-end;margin-top:12px;gap:8px}
 .obtn{font-size:.85rem;padding:6px 10px;border-radius:8px;background:#efece4;color:#3f3c36;font-weight:600}
+.obtn:disabled{opacity:.45;cursor:not-allowed}
 .obtn[aria-pressed="true"]{background:var(--green);color:#fff}
 .orig img{width:100%;border-radius:8px;margin-top:8px;display:block}
 .orig p{font-size:.8rem;color:var(--muted);margin:4px 0 0}
@@ -357,7 +358,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-094108</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-102310</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -1553,7 +1554,7 @@ function makeXlsx(sheets) {
   files.push({ name: '_rels/.rels', data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`) });
   files.push({ name: 'xl/workbook.xml', data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map((s, i) => `<sheet name="${xml(s.name.slice(0, 31))}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('')}</sheets></workbook>`) });
   files.push({ name: 'xl/_rels/workbook.xml.rels', data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${wbRels}<Relationship Id="rIdS" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`) });
-  files.push({ name: 'xl/styles.xml', data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE3F0E6"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1"/></cellXfs></styleSheet>`) });
+  files.push({ name: 'xl/styles.xml', data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE3F0E6"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`) });
   sheets.forEach((sh, si) => {
     let rows = '';
     sh.rows.forEach((r, ri) => {
@@ -1613,7 +1614,7 @@ const PU = {
   sprayHint: T('克数按上面选的产品算；论文每株用 10 L 药液，晴天清晨、无雨时喷。', 'Grams are for the products selected above; the paper used 10 L per tree, sprayed early morning, sunny and rain-free.', 'Gram mengikut produk yang dipilih di atas; kertas menggunakan 10 L sepokok, disembur awal pagi, cerah dan tiada hujan.'),
   mixer: T('NPK 配肥（单质肥混配）', 'NPK mixer (blended from straights)', 'Pencampur NPK (campuran baja tunggal)'),
   mixerHint: T('目标是论文的配方：30 DAFS 20-10-10、45 DAFS 20-10-30、60 DAFS 10-10-30，每株 0.75 kg（即每株 N/P₂O₅/K₂O 各 150/75/75、150/75/225、75/75/225 g）。软件按论文的做法，用单质肥算出每株用量。', 'Target = the paper’s formulations: 30 DAFS 20-10-10, 45 DAFS 20-10-30, 60 DAFS 10-10-30 at 0.75 kg/tree (i.e. N/P₂O₅/K₂O of 150/75/75, 150/75/225 and 75/75/225 g per tree). The app blends them from straights exactly as the papers did.', 'Sasaran = formulasi kertas: 30 DAFS 20-10-10, 45 DAFS 20-10-30, 60 DAFS 10-10-30 pada 0.75 kg/pokok (iaitu N/P₂O₅/K₂O 150/75/75, 150/75/225 dan 75/75/225 g sepokok). Perisian mencampurnya daripada baja tunggal seperti yang dilakukan dalam kertas.'),
-  pSource: T('磷源', 'P source', 'Sumber P'),
+  pSource: T('磷源', 'P source', 'Sumber P'), waGeneric: T('陈文厚教授方案（每株用量，从坐果日起算）：', 'Prof. Dr. Tran Van Hau’s protocol (per tree, counted from fruit-set day):', 'Protokol Prof. Dr. Tran Van Hau (sepokok, dikira dari hari buah terbentuk):'), needBatch: T('先在“设置”里添加果园与坐果日期，才能导出记录与日历。', 'Add a farm and fruit-set date in Settings first to export the log and calendar.', 'Tambah ladang dan tarikh buah terbentuk dalam Tetapan dahulu untuk mengeksport log dan kalendar.'), waOpened: T('正在打开 WhatsApp；文本已复制，若未自动填入请粘贴', 'Opening WhatsApp — the text is also copied; paste it if it does not appear', 'Membuka WhatsApp — teks juga disalin; tampal jika tidak muncul'), treeUnit: T('株', 'trees', 'pokok'), drenchShort: T('根区浇钙', 'Root-drench Ca', 'Siram Ca akar'), waFoot: T('详细做法、药桶用量与购物清单见软件：', 'Full instructions, tank amounts and shopping list in the app:', 'Arahan penuh, jumlah tangki dan senarai beli dalam perisian:'),
   caTimes: T('浇根 3 次 + 喷 1 次', '3 drenches + 1 spray', '3 siraman + 1 semburan'),
   tankLineD: T('你的 {L} L 桶：加 {g} g，约浇 {n} 棵树', 'Your {L} L tank: add {g} g, drenches about {n} trees', 'Tangki {L} L anda: tambah {g} g, cukup menyiram kira-kira {n} pokok'),
   boronShop: T('第 50 天与第 70 天各喷 1 次；用量按标签（讲义未给浓度）', 'Sprayed on day 50 and day 70; amount per label (no concentration in the talk)', 'Disembur pada hari 50 dan 70; jumlah mengikut label (tiada kepekatan dalam perkongsian)'),
@@ -1770,6 +1771,14 @@ function mixerCalc(n) {
   return h;
 }
 const plain = s => t(s).replace(/<[^>]+>/g, '');
+function stepShort(p, n) { // one-line version for WhatsApp: what + per-tree amount (+ batch total)
+  const kg = g => (g * n / 1000).toFixed(1) + ' kg';
+  if (p.kind === 'soil') { const tg = NPK_TARGETS[p.d]; const { lines } = mixLines(tg); const short = l => t(l.name).replace(/\s+\d+-\d+-\d+$/, ''); return `${t(UI.soil)} NPK ${tg.r}: ` + lines.map(l => `${short(l)} ${Math.round(l.g)} g`).join(' + ') + (n > 0 ? ` (${n} ${t(PU.treeUnit)}: ` + lines.map(l => `${short(l)} ${kg(l.g)}`).join(' + ') + ')' : ''); }
+  if (p.kind === 'care') return plain(p.short || p.what);
+  if (p.kind === 'drench') return `${t(PU.drenchShort)} ${p.n}/3 · Ca(NO₃)₂ ${caSrc().gl * 10} g / 10 L${n > 0 ? ` (${n} ${t(PU.treeUnit)}: ${kg(caSrc().gl * 10)})` : ''}`;
+  if (p.extra === 'knb') return `${t(UI.spray)} KNO₃ 1% ${KNO3_GL * 10} g / 10 L + B${n > 0 ? ` (${n} ${t(PU.treeUnit)}: KNO₃ ${kg(KNO3_GL * 10)})` : ''}`;
+  const g = sprayGL(p.d), chem = p.d === 40 ? 'Ca(NO₃)₂' : 'MgSO₄'; return `${t(UI.spray)} ${chem} ${g * 10} g / 10 L${p.d === 50 ? ' + B' : ''}${n > 0 ? ` (${n} ${t(PU.treeUnit)}: ${chem} ${kg(g * 10)})` : ''}`;
+}
 function stepText(p, html, n) { // full, self-contained instruction for one protocol step; n = trees in the batch (adds totals)
   const L = +planCfg.tank || 16; const kg = g => (g * n / 1000).toFixed(1) + ' kg';
   if (p.kind === 'soil') {
@@ -1801,14 +1810,23 @@ function stepText(p, html, n) { // full, self-contained instruction for one prot
 const dayLab = p => p.kind === 'care' && p.to ? fmt(PU.dayRange, { a: p.d, b: p.to }) : p.id === 'lime' ? t(PU.afterHarvest) : fmt(PU.dayN, { d: p.d });
 function waText() {
   const lines = [t(UI.planTitle), ''];
-  for (const f of FARMS) { const bs = f.batches.filter(b => b.date); if (!bs.length) continue; lines.push(`■ ${fname(f)} (${ftrees(f)} ${t(PU.trees)})`);
-    for (const b of bs) { lines.push(`▶ ${bname(f, b)} — ${btrees(b)} ${t(PU.trees)} — ${t(UI.fruitSet)} ${b.date}${b.outcome ? ' — ' + t(PU.outcome) + ': ' + t(outLab(b.outcome)) : ''}`); for (const s of stepsFor(f, b)) lines.push(`  ${s.log ? '✅' : '☐'} ${iso(s.d)} · ${dayLab(s.p)} · ${stepText(s.p, false, btrees(s.b))}`); } lines.push(''); }
-  lines.push(plain(UI.planHint)); return lines.join('\n');
+  if (!allSteps('all').length) { // no batch yet: share the generic per-tree protocol, day by day
+    lines.push(t(PU.waGeneric), '');
+    for (const p of PROTOCOL.concat(PLAN_EXTRA, CARE).sort((a, b) => a.d - b.d)) lines.push(`• ${dayLab(p)} · ${stepShort(p, 0)}`);
+    lines.push('', t(PU.waFoot) + ' ' + APP_URL); return lines.join('\n');
+  }
+  for (const f of FARMS) { const bs = f.batches.filter(b => b.date); if (!bs.length) continue; lines.push(`■ ${fname(f)} (${ftrees(f)} ${t(PU.treeUnit)})`);
+    for (const b of bs) { lines.push(`▶ ${bname(f, b)} — ${btrees(b)} ${t(PU.treeUnit)} — ${t(UI.fruitSet)} ${b.date}${b.outcome ? ' — ' + t(PU.outcome) + ': ' + t(outLab(b.outcome)) : ''}`); for (const s of stepsFor(f, b)) lines.push(`${s.log ? '✅' : '☐'} ${iso(s.d)} · ${dayLab(s.p)} · ${stepShort(s.p, btrees(s.b))}`); } lines.push(''); }
+  lines.push(t(PU.waFoot) + ' ' + APP_URL); return lines.join('\n');
 }
 function icsText() {
   const ymd = d => iso(d).replace(/-/g, ''); let out = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//tigerstripe//durian//EN', 'CALSCALE:GREGORIAN'];
-  for (const s of allSteps('all')) { const e = new Date(s.d); e.setDate(e.getDate() + 1); out.push('BEGIN:VEVENT', `UID:${s.k}@tigerstripe`, `DTSTAMP:${ymd(new Date())}T000000Z`, `DTSTART;VALUE=DATE:${ymd(s.d)}`, `DTEND;VALUE=DATE:${ymd(e)}`, `SUMMARY:${t(T('榴莲', 'Durian', 'Durian'))} ${fname(s.f)} · ${bname(s.f, s.b)} · ${dayLab(s.p)} · ${t(UI[s.p.kind])}`, `DESCRIPTION:${stepText(s.p, false, btrees(s.b)).replace(/[,;]/g, '\\$&')}`, 'END:VEVENT'); }
-  out.push('END:VCALENDAR'); return out.join('\r\n');
+  for (const s of allSteps('all')) { const e = new Date(s.d); e.setDate(e.getDate() + 1); out.push('BEGIN:VEVENT', `UID:${s.k}@tigerstripe`, `DTSTAMP:${ymd(new Date())}T000000Z`, `DTSTART;VALUE=DATE:${ymd(s.d)}`, `DTEND;VALUE=DATE:${ymd(e)}`, `SUMMARY:${(t(T('榴莲', 'Durian', 'Durian')) + ' ' + fname(s.f) + ' · ' + bname(s.f, s.b) + ' · ' + dayLab(s.p) + ' · ' + t(UI[s.p.kind]))}`, `DESCRIPTION:${stepText(s.p, false, btrees(s.b))}`, 'END:VEVENT'); }
+  out.push('END:VCALENDAR');
+  /* RFC 5545: escape text, fold lines at 75 octets (UTF-8 safe), CRLF */
+  const esc = l => { const i = l.indexOf(':'); if (i < 0 || !/^(SUMMARY|DESCRIPTION)/.test(l)) return l; return l.slice(0, i + 1) + l.slice(i + 1).replace(/\\/g, '\\\\').replace(/[,;]/g, '\\$&').replace(/\r?\n/g, '\\n'); };
+  const fold = l => { const enc = new TextEncoder(); const parts = []; let cur = ''; for (const ch of l) { if (enc.encode(cur + ch).length > (parts.length ? 74 : 75)) { parts.push(cur); cur = ch; } else cur += ch; } parts.push(cur); return parts.join('\r\n '); };
+  return out.map(l => fold(esc(l))).join('\r\n') + '\r\n';
 }
 function xlsxBlob() {
   const now = iso(new Date());
@@ -1908,7 +1926,7 @@ function renderPlan() {
   /* 4. quantities & shopping (one place) — rendered separately so tree-count edits refresh it live */
   h += `<div id="qsec">${quantitiesHtml()}</div>`;
   /* 5. export */
-  h += `<h3 class="ph">${t(PU.export)}</h3><div class="exp"><button class="obtn wa" id="waBtn">${t(PU.wa)}</button><button class="obtn" id="xlsxBtn">${t(PU.xlsx)}</button><button class="obtn" id="icsBtn">${t(PU.ics)}</button></div><div class="exp" style="margin-top:6px"><button class="obtn" id="bakBtn">${t(PU.backup)}</button><label class="obtn" for="resFile">${t(PU.restore)}</label><input type="file" id="resFile" accept=".json,application/json" hidden></div><p class="hint" style="margin-top:4px">${t(PU.backupHint)}</p><p class="hint" id="resMsg" style="margin-top:2px"></p>`;
+  h += `<h3 class="ph">${t(PU.export)}</h3><div class="exp"><button class="obtn wa" id="waBtn">${t(PU.wa)}</button><button class="obtn" id="xlsxBtn"${allSteps('all').length ? '' : ' disabled'}>${t(PU.xlsx)}</button><button class="obtn" id="icsBtn"${allSteps('all').length ? '' : ' disabled'}>${t(PU.ics)}</button></div>${allSteps('all').length ? '' : `<p class="hint" style="margin-top:4px">${t(PU.needBatch)}</p>`}<div class="exp" style="margin-top:6px"><button class="obtn" id="bakBtn">${t(PU.backup)}</button><label class="obtn" for="resFile">${t(PU.restore)}</label><input type="file" id="resFile" accept=".json,application/json" hidden></div><p class="hint" style="margin-top:4px">${t(PU.backupHint)}</p><p class="hint" id="resMsg" style="margin-top:2px"></p>`;
   /* 6. extra + hint + evidence (toggled) */
   if (!allSteps('all').length) h += `<div class="note" data-label="${esc(t(UI.extra))}"><ul class="b" style="margin:0">` + UI.extraItems.map(i => `<li>${t(i)}</li>`).join('') + '</ul></div>';
   h += `<p class="hint">${t(UI.planHint)}</p>`;
@@ -1943,7 +1961,14 @@ function openWa(txt) {
   const m = $('#wamodal'); $('#waTitle').textContent = t(PU.waPreview); $('#waCancel').textContent = t(PU.cancel); $('#waSend').textContent = t(PU.send); $('#waCopy').textContent = t(PU.copyOnly);
   const ta = $('#waText'); ta.value = txt; m.classList.add('open'); setTimeout(() => { ta.focus(); ta.setSelectionRange(0, 0); ta.scrollTop = 0; }, 50);
   $('#waCancel').onclick = $('#waBg').onclick = () => m.classList.remove('open');
-  $('#waSend').onclick = () => { const a = document.createElement('a'); a.href = 'https://wa.me/?text=' + encodeURIComponent(ta.value); a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); m.classList.remove('open'); };
+  $('#waSend').onclick = async () => {
+    const txt = ta.value; const mobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+    try { await navigator.clipboard.writeText(txt); } catch (e) {}
+    if (mobile && navigator.share) { try { await navigator.share({ text: txt }); m.classList.remove('open'); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    /* desktop (or share unsupported): api.whatsapp.com hands the text to WhatsApp Desktop / WhatsApp Web; text is already on the clipboard as a fallback */
+    const a = document.createElement('a'); a.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(txt); a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+    toast(t(PU.waOpened)); m.classList.remove('open');
+  };
   $('#waCopy').onclick = async () => { try { await navigator.clipboard.writeText(ta.value); toast(t(PU.copied)); } catch (e) { ta.select(); } };
 }
 
