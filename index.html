@@ -42,6 +42,7 @@ header{position:sticky;top:0;z-index:20;background:var(--green);color:#fff;paddi
 .hbar h1 #appBy{font-size:.78rem;font-weight:500;opacity:.9}
 .hbar h1 .tl{display:flex;align-items:baseline;gap:6px;min-width:0}
 .hbar h1 #appName{flex:none}
+.hbar h1 small.folded{white-space:normal;overflow:visible;text-overflow:clip}
 .hbar h1 #appBy{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:420px){.hbar h1{font-size:.98rem}.hbar h1 #appBy{font-size:.72rem}}
 @media (max-width:370px){.hbar{gap:6px;padding:8px 10px}.hbar h1{font-size:.88rem}.hbar h1 #appBy{font-size:.66rem}.hbtn{padding:6px 8px}}
@@ -358,7 +359,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-102310</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-103502</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -1985,9 +1986,14 @@ function renderTOC(q) {
 function renderChrome() {
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang; document.body.dataset.lang = lang;
   $('#langBtn').textContent = UI.langName[lang]; $('#appName').textContent = t(UI.name); $('#appBy').textContent = '· ' + t(UI.by); $('#appSub').textContent = t(UI.sub); document.title = t(UI.name) + ' · ' + t(UI.by);
-  $('#tabSlides').textContent = t(UI.tabSlides); $('#tabPlan').textContent = t(UI.tabPlan);
+  fitHeader(); $('#tabSlides').textContent = t(UI.tabSlides); $('#tabPlan').textContent = t(UI.tabPlan);
   $('#drTitle').textContent = t(UI.contents); $('#fsLabel').textContent = t(UI.textSize); $('#qrOpenLbl').textContent = t(UI.qrOpen); $('#qrTitle').textContent = t(UI.qrTitle); $('#qrHint').textContent = t(UI.qrHint); $('#qrCopy').textContent = t(UI.qrCopy); $('#qrWa').textContent = t(UI.qrWa); $('#qrClose').textContent = t(UI.qrClose); if (typeof renderInstall === 'function') renderInstall(); $('#q').placeholder = t(UI.search); $('#foot').textContent = t(UI.footer);
 }
+function fitHeader() {
+  const by = $('#appBy'), sub = $('#appSub'); by.hidden = false; by.textContent = '· ' + t(UI.by); sub.textContent = t(UI.sub);
+  sub.classList.remove('folded'); requestAnimationFrame(() => { if (by.scrollWidth > by.clientWidth + 1) { by.hidden = true; sub.textContent = t(UI.by) + ' · ' + t(UI.sub); sub.classList.add('folded'); } });
+}
+window.addEventListener('resize', () => { if (typeof fitHeader === 'function') fitHeader(); });
 function setView(v) {
   view = v; document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.view === v));
   $('#bnav').style.display = v === 'slides' ? '' : 'none';
@@ -2023,7 +2029,7 @@ $('#prevBtn').onclick = () => go(idx - 1); $('#nextBtn').onclick = () => go(idx 
 document.querySelectorAll('.tab').forEach(b => b.onclick = () => { returnTo = null; setView(b.dataset.view); });
 document.addEventListener('keydown', e => { if (view !== 'slides' || $('#drawer').classList.contains('open')) return; if (e.key === 'ArrowRight' || e.key === 'PageDown') go(idx + 1); if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(idx - 1); });
 let tx = 0, ty = 0; document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
-document.addEventListener('touchend', e => { if (view !== 'slides') return; const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.abs(dx) > 70 && Math.abs(dx) > 2 * Math.abs(dy) && !e.target.closest('.tw')) go(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
+document.addEventListener('touchend', e => { if (view !== 'slides') return; const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.abs(dx) > 70 && Math.abs(dx) > 2 * Math.abs(dy) && !e.target.closest('.tw, .dgw, .scrub, input, textarea, .wamodal, .drawer')) go(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
 renderAll();
 /* ═══════════ PWA ═══════════ */
 /* share-this-app QR modal */
