@@ -359,7 +359,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-103502</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-104311</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -1093,9 +1093,9 @@ const DIAGRAMS = {
     ] },
   cadef: { h: 900,
     nodes: [
-      { id: 'sm', x: 490, y: 105, w: 330, h: 100, fill: Y, shape: 'ellipse', text: T('第二信使', 'Secondary messenger', 'Utusan kedua') },
-      { id: 'dt', x: 820, y: 45, w: 370, h: 75, fill: W, cls: 'small', text: T('<span style="color:#1a7a2e">抗病能力下降</span>', '<span style="color:#1a7a2e">Decreasing capacity of disease tolerance</span>', '<span style="color:#1a7a2e">Keupayaan ketahanan penyakit menurun</span>') },
-      { id: 'pe', x: 1225, y: 130, w: 350, h: 110, fill: Y, shape: 'ellipse', cls: 'small', text: T('果胶酶活性降低', 'Decrease activity of E. pectinase', 'Aktiviti enzim pektinase menurun') },
+      { id: 'sm', x: 245, y: 100, w: 330, h: 100, fill: Y, shape: 'ellipse', text: T('第二信使', 'Secondary messenger', 'Utusan kedua') },
+      { id: 'dt', x: 820, y: 62, w: 370, h: 80, fill: W, cls: 'small', text: T('<span style="color:#1a7a2e">抗病能力下降</span>', '<span style="color:#1a7a2e">Decreasing capacity of disease tolerance</span>', '<span style="color:#1a7a2e">Keupayaan ketahanan penyakit menurun</span>') },
+      { id: 'pe', x: 1300, y: 80, w: 350, h: 110, fill: Y, shape: 'ellipse', cls: 'small', text: T('果胶酶活性降低', 'Decrease activity of E. pectinase', 'Aktiviti enzim pektinase menurun') },
       { id: 'ca', x: 815, y: 250, w: 370, h: 120, fill: Y, thick: true, stroke: '#c8321f', cls: 'big', text: T('<span style="color:#1e3a57">缺钙</span>', '<span style="color:#1e3a57">Deficiency calcium</span>', '<span style="color:#1e3a57">Kekurangan kalsium</span>') },
       { id: 'ax', x: 245, y: 250, w: 320, h: 80, fill: GR, cls: 'small', text: T('合成生长素、GA₃、ABA…', 'Synthesis auxin, GA₃, ABA, …', 'Sintesis auksin, GA₃, ABA, …') },
       { id: 'ww', x: 1415, y: 255, w: 340, h: 80, fill: GR, cls: 'small', text: T('细胞壁与细胞膜脆弱', 'Weakness of cell wall & membrane', 'Dinding sel & membran lemah') },
@@ -1111,11 +1111,11 @@ const DIAGRAMS = {
       { id: 'pq', x: 1400, y: 495, w: 370, h: 80, fill: '#fbf6e4', cls: 'small', text: T('<span class="red">果实品质生理病</span>', '<span class="red">Physiological disorder of fruit quality</span>', '<span class="red">Gangguan fisiologi kualiti buah</span>') },
       { id: 'un', x: 585, y: 690, w: 230, h: 80, fill: W, cls: 'small', text: T('不均匀、变色', 'Uneven, discoloration', 'Tidak sekata, perubahan warna') },
       { id: 'bs', x: 860, y: 690, w: 200, h: 80, fill: W, cls: 'small', text: T('苦斑、水肉', 'Bitter spot, watery', 'Bintik pahit, berair') },
-      { id: 'cs', x: 1135, y: 672, w: 230, h: 55, fill: W, text: T('木栓斑', 'Cork spots', 'Bintik gabus') },
-      { id: 'sp', x: 1420, y: 672, w: 200, h: 55, fill: W, text: T('海绵状果肉', 'Spongy', 'Berspan') },
+      { id: 'cs', x: 1135, y: 690, w: 230, h: 55, fill: W, text: T('木栓斑', 'Cork spots', 'Bintik gabus') },
+      { id: 'sp', x: 1420, y: 690, w: 200, h: 55, fill: W, text: T('海绵状果肉', 'Spongy', 'Berspan') },
     ],
     edges: [
-      { from: 'sm', to: 'ax', style: 'r' }, { from: 'pe', to: 'ca', style: 'r' }, { from: 'cw', to: 'ww', style: 'r' },
+      { from: 'sm', to: 'ax', style: 'r', via: [[245, 180]] }, { from: 'pe', to: 'dt', style: 'r', via: [[1090, 80]] }, { from: 'cw', to: 'ww', style: 'r', via: [[1180, 320]] },
       { from: 'ca', to: 'dt' }, { from: 'ca', to: 'ax' }, { from: 'ca', to: 'ww' }, { from: 'ca', to: 'dm' }, { from: 'ca', to: 'gl' }, { from: 'ca', to: 'fd' },
       { from: 'ww', to: 'pq' }, { from: 'pq', to: 'un' }, { from: 'pq', to: 'bs' }, { from: 'pq', to: 'cs' }, { from: 'pq', to: 'sp' },
       { from: 'ax', to: 'r1', via: [[30, 250], [30, 395]] }, { from: 'ax', to: 'r2', via: [[30, 250], [30, 512]] }, { from: 'ax', to: 'r3', via: [[30, 250], [30, 622]] }, { from: 'ax', to: 'r4', via: [[30, 250], [30, 725]] }, { from: 'ax', to: 'r5', via: [[30, 250], [30, 828]] },
