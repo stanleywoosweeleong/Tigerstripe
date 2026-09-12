@@ -1,0 +1,30 @@
+{
+  "name": "老虎斑 Tiger Stripe · 猫山王榴莲生理病管理",
+  "short_name": "老虎斑",
+  "description": "Prof. Dr. Tran Van Hau — Management of 'Tiger stripe' symptoms in Musang King durian (AGRI Malaysia 2026). 中文 / English / Malay, offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f1ea",
+  "theme_color": "#1f5c3a",
+  "lang": "zh",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
