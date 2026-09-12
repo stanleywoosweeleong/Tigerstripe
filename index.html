@@ -353,7 +353,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-090952</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-091553</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -1709,7 +1709,7 @@ function sprayCalc(n) {
 function bagCard(id) {
   const a = planCfg.an; const names = { u: T('尿素', 'Urea', 'Urea'), dap: T('磷酸二铵 DAP', 'DAP', 'DAP'), tsp: T('三料过磷酸钙 TSP', 'Triple superphosphate (TSP)', 'Triple superphosphate (TSP)'), sop: T('硫酸钾 SOP', 'Sulphate of potash (SOP)', 'Kalium sulfat (SOP)') };
   const f = { u: ['uN', null, null], dap: ['dapN', 'dapP', null], tsp: [null, 'tspP', null], sop: [null, null, 'sopK'] }[id];
-  const cell = (k, lab) => k ? `<div class="nc"><span>${lab}</span><input type="number" step="1" min="1" max="100" inputmode="decimal" data-an="${k}" value="${a[k]}"></div>` : `<div class="nc zero"><span>${lab}</span><div class="z">0</div></div>`;
+  const cell = (k, lab) => k ? `<div class="nc"><span>${lab}</span><input type="number" step="1" min="1" max="100" inputmode="decimal" name="an-${k}" data-an="${k}" value="${a[k]}"></div>` : `<div class="nc zero"><span>${lab}</span><div class="z">0</div></div>`;
   return `<div class="bagcard"><div class="bagname">${t(names[id])}</div><div class="npk">${cell(f[0], 'N')}<i>-</i>${cell(f[1], 'P₂O₅')}<i>-</i>${cell(f[2], 'K₂O')}</div></div>`;
 }
 function srcShort(id) { const a = planCfg.an; const nm = { u: T('尿素', 'Urea', 'Urea'), dap: 'DAP', tsp: 'TSP', sop: T('硫酸钾', 'SOP', 'SOP') }[id]; const grade = { u: `${a.uN}-0-0`, dap: `${a.dapN}-${a.dapP}-0`, tsp: `0-${a.tspP}-0`, sop: `0-0-${a.sopK}` }[id]; return `${typeof nm === 'object' ? t(nm) : nm}<br><small>${grade}</small>`; }
@@ -1727,7 +1727,7 @@ function mixLines(tg) {
 function shopList(n) {
   const sp = srcSpec(); const ids = [sp.p.id, 'u', 'sop']; const per = {}; const card = {};
   for (const [dafs, tg] of Object.entries(NPK_TARGETS)) { card[dafs] = {}; for (const l of mixLines(tg).lines) { const id = l.id; per[id] = (per[id] || 0) + l.g; card[dafs][id] = l.g; } }
-  const bagCell = (kg, key) => { const bag = +planCfg.bags[key] || 1; return `<b>${kg.toFixed(1)} kg</b><small class="pg">≈ <span class="bagn" data-kg="${kg}">${Math.ceil(kg / bag)}</span> ${t(PU.bags)} × <input type="number" class="bagin" data-bag="${key}" min="1" inputmode="numeric" value="${planCfg.bags[key]}"> ${t(PU.bagKg)}</small>`; };
+  const bagCell = (kg, key) => { const bag = +planCfg.bags[key] || 1; return `<b>${kg.toFixed(1)} kg</b><small class="pg">≈ <span class="bagn" data-kg="${kg}">${Math.ceil(kg / bag)}</span> ${t(PU.bags)} × <input type="number" class="bagin" name="bag-${key}" data-bag="${key}" min="1" inputmode="numeric" value="${planCfg.bags[key]}"> ${t(PU.bagKg)}</small>`; };
   const ci = SLIDES.findIndex(x => x.id === 'conclusions'), si = SLIDES.findIndex(x => x.id === 'suggest'), fi = SLIDES.findIndex(x => x.id === 'mt-foliar'), ti = SLIDES.findIndex(x => x.id === 'timeline');
   let h = `<div class="bagh" style="color:var(--green)">${t(PU.weighCard)}</div><p class="hint" style="margin:0 0 6px">${t(PU.srcSlides)} ${[ci, fi, si, ti].map(i => `<button class="evlink" data-i="${i}">${fmt(PU.slideN, { n: i + 1 })}</button>`).join(' · ')}</p><div class="tw"><table class="t wc"><tr><th></th>${ids.map(id => `<th>${srcShort(id)}</th>`).join('')}</tr>`;
   const rowsW = { 0: 'dr', 18: 'dr', 30: 'npk', 36: 'dr', 40: 'ca', 45: 'npk', 50: 'mg', 60: 'npk', 70: 'kn' };
@@ -1830,7 +1830,7 @@ function scheduleHtml(today) {
     const isOld = s => dEnd(s) < -14 || (s.log && dEnd(s) < 0);
     const live = steps.filter(s => !isOld(s)), old = steps.filter(isOld);
     const table = rows => { let h = `<div class="tw"><table class="t sched"><tr><th>${t(PU.done)}</th><th>${t(UI.date)} · ${t(PU.farm)}</th><th>${t(UI.action)}</th></tr>`;
-      for (const s of rows) { const d = diff(s); h += `<tr class="${s.log ? 'isdone' : dEnd(s) < 0 ? 'ov' : ''}${s === next ? ' next' : ''}"><td><input type="checkbox" class="dn" data-k="${s.k}"${s.log ? ' checked' : ''}>${s.log ? `<small>${s.log.date}</small>` : ''}</td><td style="text-align:left;white-space:nowrap"><b>${dstr(s.d)}</b><small>${s.p.kind === 'care' && s.p.to && d <= 0 && dEnd(s) >= 0 ? t(PU.ongoing) : s.p.kind === 'care' && s.p.to && dEnd(s) < 0 ? fmt(UI.daysAgo, { d: -dEnd(s) }) : d === 0 ? t(UI.today) : d > 0 ? fmt(UI.inDays, { d }) : fmt(UI.daysAgo, { d: -d })}</small><small>${esc(fname(s.f))} · ${esc(bname(s.f, s.b))}</small></td><td style="text-align:left"><span class="dchip">${dayLab(s.p)}</span><span class="dchip ${s.p.kind}">${t(UI[s.p.kind])}</span> ${stepText(s.p, true, btrees(s.b))}</td></tr>`; }
+      for (const s of rows) { const d = diff(s); h += `<tr class="${s.log ? 'isdone' : dEnd(s) < 0 ? 'ov' : ''}${s === next ? ' next' : ''}"><td><input type="checkbox" class="dn" name="done-${s.k}" data-k="${s.k}"${s.log ? ' checked' : ''}>${s.log ? `<small>${s.log.date}</small>` : ''}</td><td style="text-align:left;white-space:nowrap"><b>${dstr(s.d)}</b><small>${s.p.kind === 'care' && s.p.to && d <= 0 && dEnd(s) >= 0 ? t(PU.ongoing) : s.p.kind === 'care' && s.p.to && dEnd(s) < 0 ? fmt(UI.daysAgo, { d: -dEnd(s) }) : d === 0 ? t(UI.today) : d > 0 ? fmt(UI.inDays, { d }) : fmt(UI.daysAgo, { d: -d })}</small><small>${esc(fname(s.f))} · ${esc(bname(s.f, s.b))}</small></td><td style="text-align:left"><span class="dchip">${dayLab(s.p)}</span><span class="dchip ${s.p.kind}">${t(UI[s.p.kind])}</span> ${stepText(s.p, true, btrees(s.b))}</td></tr>`; }
       return h + '</table></div>'; };
     if (live.length) h += table(live);
     if (old.length) h += `<button class="tipbtn oldbtn" id="oldBtn" aria-expanded="${oldOpen}"><span class="car">${oldOpen ? '▾' : '▸'}</span>${fmt(PU.pastN, { n: old.length })}</button>` + (oldOpen ? table(old) : '');
@@ -1877,7 +1877,7 @@ function refreshQ() { const q = $('#qsec'); if (q) { q.innerHTML = quantitiesHtm
 const OUTS = { ok: 'outOk', some: 'outSome', bad: 'outBad' }; const outLab = v => PU[OUTS[v]] || PU.outNone;
 function outcomeHtml(b, today) {
   if (!b.date) return ''; const age = Math.round((today - new Date(b.date + 'T00:00:00')) / 864e5); if (age < 80 && !b.outcome) return '';
-  return `<label class="bout"><span>${t(PU.outcome)}</span><select class="bout-sel"><option value="">${t(PU.outNone)}</option>${Object.keys(OUTS).map(v => `<option value="${v}"${b.outcome === v ? ' selected' : ''}>${t(outLab(v))}</option>`).join('')}</select></label>`;
+  return `<label class="bout"><span>${t(PU.outcome)}</span><select class="bout-sel" name="outcome-${b.id}"><option value="">${t(PU.outNone)}</option>${Object.keys(OUTS).map(v => `<option value="${v}"${b.outcome === v ? ' selected' : ''}>${t(outLab(v))}</option>`).join('')}</select></label>`;
 }
 function renderPlan() {
   const m = $('#main'); const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -1889,8 +1889,8 @@ function renderPlan() {
   h += `<h3 class="ph">${t(PU.setup)}</h3><div class="setup"><div class="sub">${t(PU.farms)}</div>`;
   {
   { const gi = SLIDES.findIndex(x => x.id === 'growth'), di = SLIDES.findIndex(x => x.id === 'devphotos'); h += tipFold('farms', `<p class="hint" style="margin-top:0">${t(PU.farmHint)}</p><p class="hint" style="margin-top:4px">${t(PU.fsHint)} <button class="evlink" data-i="${di}">${fmt(PU.seeSlides, { a: gi + 1, b: di + 1 })}</button></p><p class="hint" style="margin-top:4px">${t(PU.ageHint)}</p>`); }
-  h += FARMS.map(f => `<div class="farm" data-f="${f.id}"><div class="farmhead"><input type="text" class="fname" placeholder="${esc(fname(f))} — ${esc(t(PU.farmName))}" value="${esc(f.name)}"><button class="bdel fdel" title="${esc(t(PU.remove))}">✕</button></div><div class="batches">` +
-    f.batches.map(b => `<div class="batch" data-b="${b.id}"><input type="text" class="bname" placeholder="${esc(bname(f, b))} — ${esc(t(PU.batchName))}" value="${esc(b.name)}"><input type="date" class="bdate" value="${esc(b.date)}"><label class="btrees"><span>${t(PU.treesOfBatch)}</span><input type="number" class="btr" min="1" inputmode="numeric" placeholder="0" value="${b.trees || ''}"></label><button class="bdel" title="${esc(t(PU.remove))}">✕</button>${outcomeHtml(b, today)}</div>`).join('') +
+  h += FARMS.map(f => `<div class="farm" data-f="${f.id}"><div class="farmhead"><input type="text" class="fname" name="farm-${f.id}" autocomplete="off" placeholder="${esc(fname(f))} — ${esc(t(PU.farmName))}" value="${esc(f.name)}"><button class="bdel fdel" title="${esc(t(PU.remove))}">✕</button></div><div class="batches">` +
+    f.batches.map(b => `<div class="batch" data-b="${b.id}"><input type="text" class="bname" name="batch-${b.id}" autocomplete="off" placeholder="${esc(bname(f, b))} — ${esc(t(PU.batchName))}" value="${esc(b.name)}"><input type="date" class="bdate" name="fruitset-${b.id}" value="${esc(b.date)}"><label class="btrees"><span>${t(PU.treesOfBatch)}</span><input type="number" class="btr" name="trees-${b.id}" min="1" inputmode="numeric" placeholder="0" value="${b.trees || ''}"></label><button class="bdel" title="${esc(t(PU.remove))}">✕</button>${outcomeHtml(b, today)}</div>`).join('') +
     `</div><button class="obtn addb">${t(PU.addBatch)}</button></div>`).join('');
   h += `<button class="obtn" id="addFarm">${t(PU.addFarm)}</button>`;
   }
