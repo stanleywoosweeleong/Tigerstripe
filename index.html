@@ -279,6 +279,10 @@ label.obtn{display:inline-block;cursor:pointer}
 .drawer .bg{position:absolute;inset:0;background:rgba(0,0,0,.45)}
 .drawer .pn{position:absolute;top:0;bottom:0;left:0;width:min(88vw,380px);background:var(--card);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top)) 0 20px;box-shadow:4px 0 24px rgba(0,0,0,.25)}
 .drawer h3{margin:0 14px 8px;font-size:1rem;color:var(--green)}
+.qrbox{text-align:center}
+.qrbox img{width:min(260px,70vw);height:auto;image-rendering:pixelated;border:8px solid #fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.qrbox .url{font-size:.85rem;word-break:break-all;margin:8px 0 2px}
+.qrbox .url a{color:var(--green);font-weight:700}
 .fsrow{display:flex;align-items:center;gap:8px;margin:0 14px 10px;font-size:.85rem;color:var(--muted)}
 .fsrow span{flex:1}
 .fsb{padding:5px 12px;border-radius:8px;background:#efece4;color:#3f3c36;font-weight:700;font-size:.95rem}
@@ -353,7 +357,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-091553</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260912-094108</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -368,11 +372,13 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
   <div class="pn">
     <h3 id="drTitle"></h3>
     <div class="fsrow"><span id="fsLabel"></span><button class="fsb" id="fsMinus" aria-label="Smaller text">A−</button><button class="fsb" id="fsPlus" aria-label="Larger text">A+</button></div>
+    <div class="fsrow"><button class="fsb" id="qrOpen" style="flex:1">📱 <span id="qrOpenLbl"></span></button></div>
     <div class="search"><input id="q" type="search" autocomplete="off"></div>
     <div id="toc"></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="wamodal" id="qrmodal"><div class="bg" id="qrBg"></div><div class="box qrbox"><h3 id="qrTitle"></h3><img id="qrImg" alt="QR code" src="data:image/png;base64,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"><p class="url"><a id="qrLink" href="https://stanleywoosweeleong.github.io/Tigerstripe/" target="_blank" rel="noopener">https://stanleywoosweeleong.github.io/Tigerstripe/</a></p><p class="hint" id="qrHint"></p><div class="acts"><button class="obtn" id="qrCopy"></button><span class="sp"></span><button class="obtn" id="qrClose"></button><button class="obtn send" id="qrWa"></button></div></div></div>
 <div class="wamodal" id="wamodal"><div class="bg" id="waBg"></div><div class="box"><h3 id="waTitle"></h3><textarea id="waText" rows="12" spellcheck="false"></textarea><div class="acts"><button class="obtn" id="waCopy"></button><span class="sp"></span><button class="obtn" id="waCancel"></button><button class="obtn send" id="waSend"></button></div></div></div>
 
 <script>
@@ -994,6 +1000,7 @@ const SLIDES = [
         { j: T('芹苴大学博士论文，2025', 'PhD thesis, Can Tho University, 2025', 'Tesis PhD, Universiti Can Tho, 2025'), t: 'Hiện tượng rối loạn sinh lý trái sầu riêng (<i>Durio zibethinus</i> Murr.) và giải pháp khắc phục', a: 'Nguyễn Huỳnh Dương (supervisors: Trần Văn Hậu, Lê Vĩnh Thúc)', u: 'https://gs.ctu.edu.vn/luan-an/thong-tin-luan-an-ncs/2649-thong-tin-luan-an-tien-si-cua-ncs-nguyen-huynh-duong-nganh-khoa-hoc-cay-trong-khoa-2023.html', s: T('第 34–37 页综合方案与结论', 'Integrated solution and conclusions on slides 34–37', 'Penyelesaian bersepadu dan kesimpulan pada slaid 34–37') },
       ] },
       { type: 'note', text: T('链接需要网络连接；离线时可先记下 DOI。', 'Links need an internet connection; offline, note the DOI for later.', 'Pautan memerlukan sambungan internet; luar talian, catat DOI untuk kemudian.') },
+      { type: 'note', text: T('<b>致谢与版权</b>：本软件的全部数据、图片与方案来自<b>陈文厚教授（Prof. Dr. Tran Van Hau）</b>于 2026 年 9 月 11 日 AGRI Malaysia 2026 AgriTalk 的分享，以及他与 Nguyen Huynh Duong、Le Vinh Thuc 在<b>越南芹苴大学（Can Tho University）</b>发表的研究。数据与照片版权归原作者及芹苴大学所有；本软件为非商业学习工具，由 Stanley Woo 整理，转录如有出入以原图与论文为准。', '<b>Acknowledgement and copyright</b>: all data, photographs and the protocol in this app come from <b>Prof. Dr. Tran Van Hau</b>’s AgriTalk presentation at AGRI Malaysia 2026 (11 September 2026) and from the research he published with Nguyen Huynh Duong and Le Vinh Thuc at <b>Can Tho University, Vietnam</b>. Data and photographs © the original authors and Can Tho University. This app is a non-commercial study aid compiled by Stanley Woo; where the transcription differs from the originals, the original slides and papers prevail.', '<b>Penghargaan dan hak cipta</b>: semua data, foto dan protokol dalam perisian ini berasal daripada pembentangan AgriTalk <b>Prof. Dr. Tran Van Hau</b> di AGRI Malaysia 2026 (11 September 2026) dan penyelidikan yang diterbitkannya bersama Nguyen Huynh Duong dan Le Vinh Thuc di <b>Universiti Can Tho, Vietnam</b>. Data dan foto © penulis asal dan Universiti Can Tho. Perisian ini alat pembelajaran bukan komersial yang disusun oleh Stanley Woo; jika transkripsi berbeza daripada yang asal, slaid dan kertas asal diguna pakai.') },
     ],
   },
   {
@@ -1219,11 +1226,12 @@ const UI = {
     T('坐果后 0–50 天：根区易溶性钙 2–3 次', '0–50 DAFS: soluble Ca to root zone 2–3 times', '0–50 DAFS: Ca mudah larut ke zon akar 2–3 kali'),
     T('50 天至采收：每 15–20 天叶面补钙', '50 DAFS to harvest: foliar Ca every 15–20 days', '50 DAFS hingga tuai: semburan Ca setiap 15–20 hari'),
   ],
-  footer: T('内容转录自 2026-09-11 AGRI Malaysia 2026 AgriTalk 演讲照片，仅供学习参考。数据版权属原作者（Can Tho University）。', 'Transcribed from photos of the AgriTalk presentation at AGRI Malaysia 2026 (11 Sep 2026) for study reference. Data © the original authors (Can Tho University).', 'Ditranskripsi daripada foto pembentangan AgriTalk di AGRI Malaysia 2026 (11 Sep 2026) untuk rujukan pembelajaran. Data © penulis asal (Universiti Can Tho).'),
+  footer: T('内容整理自陈文厚教授（Prof. Dr. Tran Van Hau，越南芹苴大学）2026-09-11 AGRI Malaysia 2026 AgriTalk 的分享及其发表论文，仅供学习参考。数据与照片版权 © 原作者与 Can Tho University。', 'Compiled from Prof. Dr. Tran Van Hau’s (Can Tho University, Vietnam) AgriTalk presentation at AGRI Malaysia 2026 (11 Sep 2026) and his published papers, for study reference. Data and photographs © the original authors and Can Tho University.', 'Disusun daripada pembentangan AgriTalk Prof. Dr. Tran Van Hau (Universiti Can Tho, Vietnam) di AGRI Malaysia 2026 (11 Sep 2026) dan kertas terbitannya, untuk rujukan pembelajaran. Data dan foto © penulis asal dan Universiti Can Tho.'),
   updated: T('已更新到新版本', 'Updated to the latest version', 'Dikemas kini ke versi terkini'),
   scrollHint: T('← 图可左右滑动查看 →', '← swipe the diagram sideways to see all of it →', '← leret rajah ke kiri/kanan untuk melihat semua →'),
   offline: T('离线可用', 'Ready for offline use', 'Sedia untuk luar talian'),
   textSize: T('字体大小', 'Text size', 'Saiz teks'),
+  qrOpen: T('分享此软件', 'Share this app', 'Kongsi perisian ini'), qrTitle: T('扫码打开老虎斑软件', 'Scan to open the Tiger Stripe app', 'Imbas untuk membuka perisian Belang Harimau'), qrHint: T('用手机相机扫描，或把链接发给农友。打开后可“添加到主屏幕”，没有网络也能用。', 'Scan with a phone camera, or send the link to fellow growers. Once open, add it to the home screen — it works without internet.', 'Imbas dengan kamera telefon, atau hantar pautan kepada rakan penanam. Selepas dibuka, tambah ke skrin utama — berfungsi tanpa internet.'), qrCopy: T('复制链接', 'Copy link', 'Salin pautan'), qrWa: T('通过 WhatsApp 发送', 'Send via WhatsApp', 'Hantar melalui WhatsApp'), qrClose: T('关闭', 'Close', 'Tutup'), qrCopied: T('链接已复制', 'Link copied', 'Pautan disalin'), qrWaText: T('老虎斑 Tiger Stripe —— 陈文厚教授猫山王榴莲生理病管理方案（中文 / English / Malay，离线可用）：', 'Tiger Stripe — Prof. Dr. Tran Van Hau’s Musang King physiological-disorder protocol (中文 / English / Malay, works offline):', 'Belang Harimau — protokol gangguan fisiologi Musang King Prof. Dr. Tran Van Hau (中文 / English / Malay, berfungsi luar talian):'),
   install: T('安装到手机主屏幕，没有网络也能打开。', 'Install on your phone’s home screen — it opens without internet.', 'Pasang pada skrin utama telefon — boleh dibuka tanpa internet.'), installBtn: T('安装', 'Install', 'Pasang'),
   installIos: T('iPhone：在 Safari 点底部“分享”按钮 → “添加到主屏幕”，之后没有网络也能打开。', 'iPhone: tap the Share button in Safari → “Add to Home Screen”; it then opens without internet.', 'iPhone: ketik butang Kongsi dalam Safari → “Add to Home Screen”; selepas itu boleh dibuka tanpa internet.'),
 };
@@ -1953,7 +1961,7 @@ function renderChrome() {
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang; document.body.dataset.lang = lang;
   $('#langBtn').textContent = UI.langName[lang]; $('#appName').textContent = t(UI.name); $('#appBy').textContent = '· ' + t(UI.by); $('#appSub').textContent = t(UI.sub); document.title = t(UI.name) + ' · ' + t(UI.by);
   $('#tabSlides').textContent = t(UI.tabSlides); $('#tabPlan').textContent = t(UI.tabPlan);
-  $('#drTitle').textContent = t(UI.contents); $('#fsLabel').textContent = t(UI.textSize); if (typeof renderInstall === 'function') renderInstall(); $('#q').placeholder = t(UI.search); $('#foot').textContent = t(UI.footer);
+  $('#drTitle').textContent = t(UI.contents); $('#fsLabel').textContent = t(UI.textSize); $('#qrOpenLbl').textContent = t(UI.qrOpen); $('#qrTitle').textContent = t(UI.qrTitle); $('#qrHint').textContent = t(UI.qrHint); $('#qrCopy').textContent = t(UI.qrCopy); $('#qrWa').textContent = t(UI.qrWa); $('#qrClose').textContent = t(UI.qrClose); if (typeof renderInstall === 'function') renderInstall(); $('#q').placeholder = t(UI.search); $('#foot').textContent = t(UI.footer);
 }
 function setView(v) {
   view = v; document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.view === v));
@@ -1993,6 +2001,12 @@ let tx = 0, ty = 0; document.addEventListener('touchstart', e => { tx = e.touche
 document.addEventListener('touchend', e => { if (view !== 'slides') return; const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.abs(dx) > 70 && Math.abs(dx) > 2 * Math.abs(dy) && !e.target.closest('.tw')) go(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
 renderAll();
 /* ═══════════ PWA ═══════════ */
+/* share-this-app QR modal */
+const APP_URL = 'https://stanleywoosweeleong.github.io/Tigerstripe/';
+$('#qrOpen').onclick = () => { closeDrawer(); $('#qrmodal').classList.add('open'); };
+$('#qrBg').onclick = $('#qrClose').onclick = () => $('#qrmodal').classList.remove('open');
+$('#qrCopy').onclick = async () => { try { await navigator.clipboard.writeText(APP_URL); toast(t(UI.qrCopied)); } catch (e) { const i = document.createElement('input'); i.value = APP_URL; document.body.appendChild(i); i.select(); document.execCommand('copy'); i.remove(); toast(t(UI.qrCopied)); } };
+$('#qrWa').onclick = () => { const a = document.createElement('a'); a.href = 'https://wa.me/?text=' + encodeURIComponent(t(UI.qrWaText) + ' ' + APP_URL); a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); };
 /* text size: −1 … +2 steps, stored per device, applied via the --fs root variable */
 let fsStep = 0; try { fsStep = Math.max(-1, Math.min(2, +localStorage.getItem('ts.fs') || 0)); } catch (e) {}
 function applyFs() { document.documentElement.dataset.fs = String(fsStep); $('#fsMinus').disabled = fsStep <= -1; $('#fsPlus').disabled = fsStep >= 2; }
