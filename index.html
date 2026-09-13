@@ -332,6 +332,16 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 .wamodal .acts{display:flex;gap:8px;margin-top:10px;align-items:center}
 .wamodal .sp{flex:1}
 .wamodal .send{background:#25d366;color:#fff}
+/* first-launch language picker */
+.langbox{text-align:center}
+.langbox .hello{font-size:.9rem;color:var(--muted);margin:0 0 12px;line-height:1.4}
+.langbox .opts{display:flex;flex-direction:column;gap:8px}
+.langbox .opts button{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#faf9f6;font-size:1.05rem;font-weight:700;text-align:left}
+.langbox .opts button:active{background:var(--pink)}
+.langbox .opts .tag{flex:0 0 auto;min-width:44px;padding:3px 8px;border-radius:6px;background:var(--green);color:#fff;font-size:.8rem;text-align:center}
+.langbox .opts .nm{flex:1}
+.langbox .opts button[lang="km"]{font-family:"Khmer UI","Leelawadee UI","Noto Sans Khmer","Khmer OS System","Khmer OS","Khmer Sangam MN",sans-serif}
+.langbox .opts .nm small{display:block;font-weight:400;font-size:.8rem;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1c1b18;color:#fff;padding:8px 14px;border-radius:20px;font-size:.85rem;z-index:40;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
 @media (max-width:880px){.dgh{display:block!important}}
@@ -361,7 +371,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260913-082959</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260913-223117</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -382,6 +392,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="wamodal" id="langmodal"><div class="bg"></div><div class="box langbox"><h3>Language · 语言 · Bahasa · Ngôn ngữ · ភាសា</h3><p class="hello">Choose your language. You can change it any time with the button at the top right.</p><div class="opts" id="langOpts"></div></div></div>
 <div class="wamodal" id="qrmodal"><div class="bg" id="qrBg"></div><div class="box qrbox"><h3 id="qrTitle"></h3><img id="qrImg" alt="QR code" src="data:image/png;base64,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"><p class="url"><a id="qrLink" href="https://stanleywoosweeleong.github.io/Tigerstripe/" target="_blank" rel="noopener">https://stanleywoosweeleong.github.io/Tigerstripe/</a></p><p class="hint" id="qrHint"></p><div class="acts"><button class="obtn" id="qrCopy"></button><span class="sp"></span><button class="obtn" id="qrClose"></button><button class="obtn send" id="qrWa"></button></div></div></div>
 <div class="wamodal" id="wamodal"><div class="bg" id="waBg"></div><div class="box"><h3 id="waTitle"></h3><textarea id="waText" rows="12" spellcheck="false"></textarea><div class="acts"><button class="obtn" id="waCopy"></button><span class="sp"></span><button class="obtn" id="waCancel"></button><button class="obtn send" id="waSend"></button></div></div></div>
 
@@ -3278,7 +3289,17 @@ document.querySelectorAll('.tab').forEach(b => b.onclick = () => { returnTo = nu
 document.addEventListener('keydown', e => { if (view !== 'slides' || $('#drawer').classList.contains('open')) return; if (e.key === 'ArrowRight' || e.key === 'PageDown') go(idx + 1); if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(idx - 1); });
 let tx = 0, ty = 0; document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
 document.addEventListener('touchend', e => { if (view !== 'slides') return; const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.abs(dx) > 70 && Math.abs(dx) > 2 * Math.abs(dy) && !e.target.closest('.tw, .dgw, .scrub, input, textarea, .wamodal, .drawer')) go(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
+/* Read before the first render, because rendering saves state (and would write the default language). */
+let hasLang = false; try { hasLang = LANGS.includes(localStorage.getItem('ts.lang')); } catch (e) {}
 renderAll();
+/* First launch: no saved language → ask once; the choice persists via save(). */
+const LANG_MENU = [['en', 'EN', 'English', 'Default'], ['zh', '中文', '中文', 'Chinese'], ['ms', 'BM', 'Bahasa Malaysia', 'Malay'], ['vi', 'VI', 'Tiếng Việt', 'Vietnamese'], ['km', 'KM', 'ភាសាខ្មែរ', 'Khmer']];
+function askLang() {
+  $('#langOpts').innerHTML = LANG_MENU.map(([c, tag, nm, en]) => `<button type="button" data-l="${c}" lang="${c}"><span class="tag">${tag}</span><span class="nm">${nm}<small>${en}</small></span></button>`).join('');
+  $('#langOpts').querySelectorAll('button').forEach(b => b.onclick = () => { lang = b.dataset.l; save(); $('#langmodal').classList.remove('open'); renderAll(); });
+  $('#langmodal').classList.add('open');
+}
+if (!hasLang) askLang();
 /* ═══════════ PWA ═══════════ */
 /* share-this-app QR modal */
 const APP_URL = 'https://stanleywoosweeleong.github.io/Tigerstripe/';
