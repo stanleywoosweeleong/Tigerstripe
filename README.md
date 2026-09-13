@@ -1,7 +1,7 @@
-# 老虎斑 Tiger Stripe — 猫山王榴莲生理病管理 (offline PWA)
+# Tiger Stripe 老虎斑 — Musang King physiological disorder management (offline PWA)
 
 Rebuilt from 111 photos of Prof. Dr. Tran Van Hau's AgriTalk presentation, AGRI Malaysia 2026 (11 Sep 2026, MITEC).
-40 unique slides (progressive builds collapsed to their final state), re-typeset as HTML/SVG in 中文 / English / Malay,
+40 unique slides (progressive builds collapsed to their final state), re-typeset as HTML/SVG in 中文 / English / Malay / Tiếng Việt / ខ្មែរ (Khmer),
 with the perspective-corrected original photo available behind a toggle on every slide.
 
 After the slides comes a clearly-labelled 补充资料 section (not from the talk): details from the three published papers
@@ -37,7 +37,7 @@ Data notes
 - Per-batch **采收结果 / Harvest result** select appears once a batch is ≥ 80 days old; exported in the Excel 果园 sheet and WhatsApp text.
 - **备份数据 / 恢复数据**: JSON backup of farms + log + settings (`{app:'tigerstripe', v:1, ...}`) and restore from file.
 - Install hint bar above the footer: Android/desktop show an Install button (beforeinstallprompt); iPhone shows the Share → Add to Home Screen note; hidden when running standalone or after ✕ (`ts.installHide`).
-- Language toggle shows 中文 / EN / BM; Malay text uses Belang Harimau for the disorder.
+- Language toggle cycles EN / 中文 / BM / VI / KM (English is the default on first open; the choice is remembered); Malay text uses Belang Harimau, Vietnamese Sọc hổ, Khmer ឆ្នូតខ្លា for the disorder. Vietnamese and Khmer were added at Prof. Tran's request (12 Sep 2026); they are machine-assisted translations keyed to the English text — corrections welcome. Terminology: Vietnamese follows Prof. Tran's own usage — the disorder family is *sượng cơm*, and the tiger-stripe type is glossed as flesh with uneven yellow/white colour "như 'da lợn'"; the app calls it *sượng sọc hổ*. No established Khmer term was found, so *ឆ្នូតខ្លា* is a literal rendering glossed as hard, unevenly coloured flesh — Cambodian readers are invited to suggest the local name.
 - Spray products are selectable (`planCfg.caSrc` gran|pure, `planCfg.mgSrc` epsom|pure; defaults = farm-shop products). `SPRAY_SRC` holds g/L per product (granular Ca nitrate 19% Ca → 5 g/L, pure → 4; Epsom ≈10% Mg → 4 g/L, anhydrous → 2), matched on Ca/Mg content; every spray figure (schedule rows, tank line, weighing card, shopping list, spray calc, WhatsApp, Excel) derives from `sprayGL(dafs)`.
 - Plan settings (tank size, P source, Ca / Mg products) now sit in their own 你的药桶与肥料 block between the farms and the schedule; changes refresh schedule and quantities live without re-rendering the inputs. EN/BM use a Latin-first font stack so ’ renders normally on Windows.
 - Root-zone calcium (slide 38) = three dated `drench` steps at 0 (ASAP, moves to today if entered late), 18 and 36 DAFS, using the slide-37 product/strength (Ca(NO₃)₂ 0.4%-equivalent via the product selector, 10 L/tree); included in weighing card, shopping list (Ca × 4 applications), spray calc, WhatsApp, Excel, .ics. Schedule is a single chronological checklist; today box removed; older/done rows fold under 更早 / 已做.
