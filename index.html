@@ -243,7 +243,17 @@ figure{margin:0}
 .pstep.spray{background:#fff8dc;border-color:#ecd98a}
 .pstep .k{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
 /* orig toggle */
-.origbar{display:flex;justify-content:flex-end;margin-top:12px;gap:8px}
+.origbar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.origbar .obtn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.origbar .ic{flex:none}
+.phbox .phwrap{overflow:auto;min-height:0}
+.phbox img{width:100%;display:block;border-radius:8px;border:1px solid var(--line);background:#fff}
+.phbox textarea{min-height:96px;margin-top:10px;flex:none}
+.phbox .hint{font-size:.8rem;color:var(--muted);margin:6px 0 0}
+.obtn.send{background:#25d366;color:#fff}
+.obtn[disabled]{opacity:.6}
+.dlrow{flex-direction:column;align-items:stretch;gap:4px}
+.dlrow small{color:var(--muted);font-size:.78rem}
 .obtn{font-size:.85rem;padding:6px 10px;border-radius:8px;background:#efece4;color:#3f3c36;font-weight:600}
 .obtn:disabled{opacity:.45;cursor:not-allowed}
 .obtn[aria-pressed="true"]{background:var(--green);color:#fff}
@@ -371,7 +381,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div id="backbar" class="backbar" hidden><button></button></div>
 <main id="main"></main>
 <div id="installbar" class="ibar" hidden><span id="ibarTxt"></span><button class="obtn" id="ibarBtn"></button><button class="ibx" id="ibarX" aria-label="Dismiss">✕</button></div>
-<footer id="foot"></footer><div class="ver">v tigerstripe-20260913-223117</div>
+<footer id="foot"></footer><div class="ver">v tigerstripe-20260916-075506</div>
 
 <nav class="bn" id="bnav">
   <div class="in">
@@ -387,6 +397,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
     <h3 id="drTitle"></h3>
     <div class="fsrow"><span id="fsLabel"></span><button class="fsb" id="fsMinus" aria-label="Smaller text">A−</button><button class="fsb" id="fsPlus" aria-label="Larger text">A+</button></div>
     <div class="fsrow"><button class="fsb" id="qrOpen" style="flex:1">📱 <span id="qrOpenLbl"></span></button></div>
+    <div class="fsrow dlrow"><button class="fsb" id="dlAll">🗂 <span id="dlAllLbl"></span></button><small id="dlAllHint"></small></div>
     <div class="search"><input id="q" type="search" autocomplete="off"></div>
     <div id="toc"></div>
   </div>
@@ -394,6 +405,7 @@ footer{max-width:1040px;margin:0 auto;padding:4px 14px 0;font-size:.78rem;color:
 <div class="toast" id="toast"></div>
 <div class="wamodal" id="langmodal"><div class="bg"></div><div class="box langbox"><h3>Language · 语言 · Bahasa · Ngôn ngữ · ភាសា</h3><p class="hello">Choose your language. You can change it any time with the button at the top right.</p><div class="opts" id="langOpts"></div></div></div>
 <div class="wamodal" id="qrmodal"><div class="bg" id="qrBg"></div><div class="box qrbox"><h3 id="qrTitle"></h3><img id="qrImg" alt="QR code" src="data:image/png;base64,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"><p class="url"><a id="qrLink" href="https://stanleywoosweeleong.github.io/Tigerstripe/" target="_blank" rel="noopener">https://stanleywoosweeleong.github.io/Tigerstripe/</a></p><p class="hint" id="qrHint"></p><div class="acts"><button class="obtn" id="qrCopy"></button><span class="sp"></span><button class="obtn" id="qrClose"></button><button class="obtn send" id="qrWa"></button></div></div></div>
+<div class="wamodal" id="photomodal"><div class="bg" id="phBg"></div><div class="box phbox"><h3 id="phTitle"></h3><div class="phwrap"><img id="phImg" alt=""><textarea id="phText" rows="4" spellcheck="false"></textarea><p class="hint" id="phNote"></p></div><div class="acts"><button class="obtn" id="phSave"></button><span class="sp"></span><button class="obtn" id="phCancel"></button><button class="obtn send" id="phSend"></button></div></div></div>
 <div class="wamodal" id="wamodal"><div class="bg" id="waBg"></div><div class="box"><h3 id="waTitle"></h3><textarea id="waText" rows="12" spellcheck="false"></textarea><div class="acts"><button class="obtn" id="waCopy"></button><span class="sp"></span><button class="obtn" id="waCancel"></button><button class="obtn send" id="waSend"></button></div></div></div>
 
 <script>
@@ -1248,6 +1260,10 @@ const UI = {
   textSize: T('字体大小', 'Text size', 'Saiz teks'),
   qrOpen: T('分享此软件', 'Share this app', 'Kongsi perisian ini'), qrTitle: T('扫码打开老虎斑软件', 'Scan to open the Tiger Stripe app', 'Imbas untuk membuka perisian Belang Harimau'), qrHint: T('用手机相机扫描，或把链接发给农友。打开后可“添加到主屏幕”，没有网络也能用。', 'Scan with a phone camera, or send the link to fellow growers. Once open, add it to the home screen — it works without internet.', 'Imbas dengan kamera telefon, atau hantar pautan kepada rakan penanam. Selepas dibuka, tambah ke skrin utama — berfungsi tanpa internet.'), qrCopy: T('复制链接', 'Copy link', 'Salin pautan'), qrWa: T('通过 WhatsApp 发送', 'Send via WhatsApp', 'Hantar melalui WhatsApp'), qrClose: T('关闭', 'Close', 'Tutup'), qrCopied: T('链接已复制', 'Link copied', 'Pautan disalin'), qrWaText: T('老虎斑 Tiger Stripe —— 陈文厚教授猫山王榴莲生理病管理方案（中文 / English / Malay，离线可用）：', 'Tiger Stripe — Prof. Dr. Tran Van Hau’s Musang King physiological-disorder protocol (中文 / English / Malay, works offline):', 'Belang Harimau — protokol gangguan fisiologi Musang King Prof. Dr. Tran Van Hau (中文 / English / Malay, berfungsi luar talian):'),
   install: T('安装到手机主屏幕，没有网络也能打开。', 'Install on your phone’s home screen — it opens without internet.', 'Pasang pada skrin utama telefon — boleh dibuka tanpa internet.'), installBtn: T('安装', 'Install', 'Pasang'),
+  origShort: T('原图', 'Original', 'Asal'), photoPreview: T('分享预览 —— 照片和说明文字会一起发送', 'Share preview — the photo and this caption are sent together', 'Pratonton kongsi — foto dan kapsyen ini dihantar bersama'), photoDesktopNote: T('电脑上：点“发送”后照片会复制到剪贴板，在 WhatsApp 聊天框按 Ctrl+V 粘贴即可（说明文字已自动填入）。', 'On a computer, Send copies the photo to the clipboard — press Ctrl+V in the WhatsApp chat to paste it (the caption is filled in for you).', 'Di komputer, Hantar menyalin foto ke papan keratan — tekan Ctrl+V dalam sembang WhatsApp untuk menampalnya (kapsyen diisi untuk anda).'), shareSlide: T('分享', 'Share', 'Kongsi'), saveSlide: T('保存', 'Save', 'Simpan'),
+  shareSlideTxt: T('第 {n}/{t} 页：{title}\n陈文厚教授（芹苴大学）· AGRI Malaysia 2026 · 老虎斑软件\n{url}', 'Slide {n}/{t}: {title}\nProf. Dr. Tran Van Hau (Can Tho University) · AGRI Malaysia 2026 · Tiger Stripe app\n{url}', 'Slaid {n}/{t}: {title}\nProf. Dr. Tran Van Hau (Universiti Can Tho) · AGRI Malaysia 2026 · aplikasi Belang Harimau\n{url}'),
+  dlAll: T('下载全部原始照片（ZIP）', 'Download all original slides (ZIP)', 'Muat turun semua slaid asal (ZIP)'), dlAllHint: T('40 张已编号的演讲照片，约 4 MB', '40 numbered photos of the talk, about 4 MB', '40 foto ceramah bernombor, kira-kira 4 MB'),
+  preparing: T('正在准备 {n}/{t}…', 'Preparing {n}/{t}…', 'Menyediakan {n}/{t}…'), photoSaved: T('照片已保存到下载/相册。', 'Photo saved to your downloads / photos.', 'Foto disimpan ke muat turun / foto anda.'),
   installIos: T('iPhone：在 Safari 点底部“分享”按钮 → “添加到主屏幕”，之后没有网络也能打开。', 'iPhone: tap the Share button in Safari → “Add to Home Screen”; it then opens without internet.', 'iPhone: ketik butang Kongsi dalam Safari → “Add to Home Screen”; selepas itu boleh dibuka tanpa internet.'),
 };
 /* ═══════════ STATE ═══════════ */
@@ -1874,7 +1890,17 @@ const XL = { vi: {
 "Flesh weight": "Khối lượng cơm",
 "Seed weight": "Khối lượng hạt",
 "Growth rate (g/2 weeks)": "Tốc độ tăng trưởng (g/2 tuần)",
-"(B) Growth rate per 2 weeks": "(B) Tốc độ tăng trưởng mỗi 2 tuần"
+"(B) Growth rate per 2 weeks": "(B) Tốc độ tăng trưởng mỗi 2 tuần",
+"Slide {n}/{t}: {title}\nProf. Dr. Tran Van Hau (Can Tho University) · AGRI Malaysia 2026 · Tiger Stripe app\n{url}": "Trang {n}/{t}: {title}\nGS. TS. Trần Văn Hâu (Trường ĐH Cần Thơ) · AGRI Malaysia 2026 · phần mềm Sượng sọc hổ\n{url}",
+"Download all original slides (ZIP)": "Tải tất cả ảnh gốc (ZIP)",
+"Preparing {n}/{t}…": "Đang chuẩn bị {n}/{t}…",
+"Photo saved to your downloads / photos.": "Đã lưu ảnh vào thư mục tải về / ảnh.",
+"40 numbered photos of the talk, about 4 MB": "40 ảnh bài giảng đã đánh số, khoảng 4 MB",
+"Original": "Ảnh gốc",
+"Share": "Chia sẻ",
+"Save": "Lưu",
+"Share preview — the photo and this caption are sent together": "Xem trước — ảnh và chú thích này sẽ được gửi cùng nhau",
+"On a computer, Send copies the photo to the clipboard — press Ctrl+V in the WhatsApp chat to paste it (the caption is filled in for you).": "Trên máy tính, nút Gửi sẽ sao chép ảnh vào bộ nhớ tạm — nhấn Ctrl+V trong khung chat WhatsApp để dán (chú thích đã được điền sẵn)."
 }, km: {
 "Tiger Stripe": "ឆ្នូតខ្លា",
 "Prof. Dr. Tran Van Hau": "សាស្ត្រាចារ្យ បណ្ឌិត Tran Van Hau",
@@ -2496,7 +2522,17 @@ const XL = { vi: {
 "Flesh weight": "ទម្ងន់សាច់",
 "Seed weight": "ទម្ងន់គ្រាប់",
 "Growth rate (g/2 weeks)": "អត្រាលូតលាស់ (g/2 សប្តាហ៍)",
-"(B) Growth rate per 2 weeks": "(B) អត្រាលូតលាស់ក្នុង 2 សប្តាហ៍"
+"(B) Growth rate per 2 weeks": "(B) អត្រាលូតលាស់ក្នុង 2 សប្តាហ៍",
+"Slide {n}/{t}: {title}\nProf. Dr. Tran Van Hau (Can Tho University) · AGRI Malaysia 2026 · Tiger Stripe app\n{url}": "ស្លាយ {n}/{t}: {title}\nសាស្ត្រាចារ្យ បណ្ឌិត Tran Van Hau (សាកលវិទ្យាល័យ Can Tho) · AGRI Malaysia 2026 · កម្មវិធីឆ្នូតខ្លា\n{url}",
+"Download all original slides (ZIP)": "ទាញយកស្លាយដើមទាំងអស់ (ZIP)",
+"Preparing {n}/{t}…": "កំពុងរៀបចំ {n}/{t}…",
+"Photo saved to your downloads / photos.": "រូបថតបានរក្សាទុកក្នុងទាញយក / រូបភាពរបស់អ្នក។",
+"40 numbered photos of the talk, about 4 MB": "រូបថតបទបង្ហាញ 40 សន្លឹកមានលេខរៀង ប្រហែល 4 MB",
+"Original": "ដើម",
+"Share": "ចែករំលែក",
+"Save": "រក្សាទុក",
+"Share preview — the photo and this caption are sent together": "មើលជាមុន — រូបថត និងចំណងជើងនេះនឹងផ្ញើជាមួយគ្នា",
+"On a computer, Send copies the photo to the clipboard — press Ctrl+V in the WhatsApp chat to paste it (the caption is filled in for you).": "នៅលើកុំព្យូទ័រ ប៊ូតុងផ្ញើនឹងចម្លងរូបថតទៅក្តារតម្បៀតខ្ទាស់ — ចុច Ctrl+V ក្នុងការជជែក WhatsApp ដើម្បីបិទភ្ជាប់ (ចំណងជើងត្រូវបានបំពេញឱ្យរួចហើយ)។"
 } };
 let lang = 'en', idx = 0, view = 'slides', showOrig = false, planDate = '';
 try { lang = LANGS.includes(localStorage.getItem('ts.lang')) ? localStorage.getItem('ts.lang') : 'en'; idx = Math.min(SLIDES.length - 1, parseInt(localStorage.getItem('ts.idx') || '0', 10) || 0); planDate = localStorage.getItem('ts.fruitset') || ''; } catch (e) {}
@@ -2774,11 +2810,15 @@ function renderSlide() {
   const s = SLIDES[idx]; const m = $('#main');
   let h = `<article class="card${s.extra ? ' xcard' : ''}"><div class="sec-chip">${secName(s.sec)}${s.extra ? ` · <span class="xtag">${t(UI.extraTag)}</span>` : ''}</div><div class="slide-head"><span class="num">${idx + 1}</span><h2>${t(s.title)}</h2></div>`;
   h += s.blocks.map(renderBlock).join('');
-  if (s.orig) h += `<div class="origbar"><button class="obtn" id="origBtn" aria-pressed="${showOrig}">${showOrig ? t(UI.hideOrig) : t(UI.showOrig)}</button></div>`;
+  if (s.orig) h += `<div class="origbar"><button class="obtn" id="origBtn" aria-pressed="${showOrig}" title="${showOrig ? t(UI.hideOrig) : t(UI.showOrig)}"><span class="ic">${showOrig ? '▾' : '🖼'}</span>${t(UI.origShort)}</button><button class="obtn" id="saveBtn" title="JPEG"><span class="ic">⤓</span>${t(UI.saveSlide)}</button><button class="obtn send" id="shareBtn"><span class="ic">↗</span>${t(UI.shareSlide)}</button></div>`;
   if (showOrig && s.orig && ORIG[s.orig]) h += `<div class="orig"><img src="${ORIG[s.orig]}" alt=""><p>${t(UI.origCap)}</p></div>`;
   m.innerHTML = h + '</article>';
   bindSymptom(); bindLeafCheck();
-  if (s.orig) $('#origBtn').onclick = () => { showOrig = !showOrig; renderSlide(); };
+  if (s.orig) { $('#origBtn').onclick = () => {
+      /* keep the button row where the finger is: re-rendering changes the page height, which would otherwise shift the view */
+      const top = $('#origBtn').getBoundingClientRect().top; showOrig = !showOrig; renderSlide();
+      const nb = $('#origBtn'); if (!nb) return; if (top >= 0 && top <= innerHeight - 80) window.scrollBy({ top: nb.getBoundingClientRect().top - top, behavior: 'auto' }); else nb.scrollIntoView({ block: 'center', behavior: 'auto' });
+    }; $('#shareBtn').onclick = () => shareSlide(idx, $('#shareBtn')); $('#saveBtn').onclick = () => saveSlide(idx, $('#saveBtn')); }
   $('#counter').textContent = fmt(UI.slide, { n: idx + 1, t: SLIDES.length });
   syncScrub();
   $('#prevBtn').disabled = idx === 0; $('#nextBtn').disabled = idx === SLIDES.length - 1;
@@ -3246,7 +3286,7 @@ function renderChrome() {
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang; document.body.dataset.lang = lang;
   $('#langBtn').textContent = UI.langName[lang]; $('#appName').textContent = t(UI.name); $('#appBy').textContent = '· ' + t(UI.by); $('#appSub').textContent = t(UI.sub); document.title = t(UI.name) + ' · ' + t(UI.by);
   fitHeader(); $('#tabSlides').textContent = t(UI.tabSlides); $('#tabPlan').textContent = t(UI.tabPlan);
-  $('#drTitle').textContent = t(UI.contents); $('#fsLabel').textContent = t(UI.textSize); $('#qrOpenLbl').textContent = t(UI.qrOpen); $('#qrTitle').textContent = t(UI.qrTitle); $('#qrHint').textContent = t(UI.qrHint); $('#qrCopy').textContent = t(UI.qrCopy); $('#qrWa').textContent = t(UI.qrWa); $('#qrClose').textContent = t(UI.qrClose); if (typeof renderInstall === 'function') renderInstall(); $('#q').placeholder = t(UI.search); $('#foot').textContent = t(UI.footer);
+  $('#drTitle').textContent = t(UI.contents); $('#fsLabel').textContent = t(UI.textSize); $('#qrOpenLbl').textContent = t(UI.qrOpen); $('#dlAllLbl').textContent = t(UI.dlAll); $('#dlAllHint').textContent = t(UI.dlAllHint); $('#qrTitle').textContent = t(UI.qrTitle); $('#qrHint').textContent = t(UI.qrHint); $('#qrCopy').textContent = t(UI.qrCopy); $('#qrWa').textContent = t(UI.qrWa); $('#qrClose').textContent = t(UI.qrClose); if (typeof renderInstall === 'function') renderInstall(); $('#q').placeholder = t(UI.search); $('#foot').textContent = t(UI.footer);
 }
 function fitHeader() {
   const by = $('#appBy'), sub = $('#appSub'); by.hidden = false; by.textContent = '· ' + t(UI.by); sub.textContent = t(UI.sub);
@@ -3289,6 +3329,80 @@ document.querySelectorAll('.tab').forEach(b => b.onclick = () => { returnTo = nu
 document.addEventListener('keydown', e => { if (view !== 'slides' || $('#drawer').classList.contains('open')) return; if (e.key === 'ArrowRight' || e.key === 'PageDown') go(idx + 1); if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(idx - 1); });
 let tx = 0, ty = 0; document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
 document.addEventListener('touchend', e => { if (view !== 'slides') return; const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.abs(dx) > 70 && Math.abs(dx) > 2 * Math.abs(dy) && !e.target.closest('.tw, .dgw, .scrub, input, textarea, .wamodal, .drawer')) go(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
+/* ═══════════ ORIGINAL PHOTOS: numbered export, WhatsApp share, ZIP of all ═══════════ */
+const STAMP_CREDIT = 'Prof. Dr. Tran Van Hau · Can Tho University · AGRI Malaysia 2026';
+const slideFile = i => `tigerstripe-slide-${String(i + 1).padStart(2, '0')}.jpg`;
+/* Burn the slide number and the credit line under the photo so the picture explains itself wherever it is forwarded. */
+async function stampedBlob(i, type = 'image/jpeg') {
+  const s = SLIDES[i]; const img = new Image(); img.src = ORIG[s.orig]; await img.decode();
+  const w = img.naturalWidth, h = img.naturalHeight, bar = Math.round(w * 0.075);
+  const c = document.createElement('canvas'); c.width = w; c.height = h + bar; const g = c.getContext('2d');
+  g.drawImage(img, 0, 0); g.fillStyle = '#1f5c3a'; g.fillRect(0, h, w, bar);
+  const big = Math.round(bar * 0.42), small = Math.round(bar * 0.26); const pad = Math.round(w * 0.018);
+  g.fillStyle = '#fff'; g.textBaseline = 'middle'; g.font = `bold ${big}px Arial, Helvetica, sans-serif`;
+  const label = `Slide ${String(i + 1).padStart(2, '0')} / ${SLIDES.length}`; g.fillText(label, pad, h + bar / 2);
+  const lw = g.measureText(label).width; g.font = `${small}px Arial, Helvetica, sans-serif`; g.fillStyle = 'rgba(255,255,255,.92)';
+  g.textAlign = 'right'; g.fillText(STAMP_CREDIT, w - pad, h + bar * 0.34); g.fillText(APP_URL.replace(/^https?:\/\//, ''), w - pad, h + bar * 0.7);
+  /* if the credit would collide with the label on a narrow image, drop the URL line */
+  if (g.measureText(STAMP_CREDIT).width + lw + 3 * pad > w) { g.fillStyle = '#1f5c3a'; g.fillRect(pad + lw, h, w - pad - lw, bar); g.fillStyle = 'rgba(255,255,255,.92)'; g.fillText(STAMP_CREDIT, w - pad, h + bar / 2); }
+  return new Promise(res => c.toBlob(res, type, 0.85));
+}
+function saveBlob(blob, name) { const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000); }
+const canShareFiles = f => !!(navigator.canShare && navigator.share && navigator.canShare({ files: [f] }));
+async function busy(btn, fn) { if (!btn || btn.disabled) return; const old = btn.innerHTML; btn.disabled = true; btn.textContent = '…'; try { await fn(); } catch (e) { console.warn(e); } btn.disabled = false; btn.innerHTML = old; }
+function shareSlide(i, btn) { return busy(btn, async () => {
+  const s = SLIDES[i]; const blob = await stampedBlob(i); const file = new File([blob], slideFile(i), { type: 'image/jpeg' });
+  const caption = fmt(UI.shareSlideTxt, { n: i + 1, t: SLIDES.length, title: t(s.title).replace(/<[^>]+>/g, ''), url: APP_URL });
+  const canFiles = canShareFiles(file); const m = $('#photomodal'); const img = $('#phImg'); const ta = $('#phText');
+  img.src = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(blob); }); ta.value = caption;
+  $('#phTitle').textContent = t(UI.photoPreview); $('#phNote').textContent = canFiles ? '' : t(UI.photoDesktopNote); $('#phNote').hidden = canFiles;
+  $('#phSave').textContent = '⤓ ' + t(UI.saveSlide); $('#phSave').hidden = canFiles; /* the share sheet already offers Save image */ $('#phCancel').textContent = t(PU.cancel); $('#phSend').textContent = t(PU.send);
+  m.classList.add('open'); ta.scrollTop = 0;
+  const close = () => m.classList.remove('open');
+  $('#phCancel').onclick = $('#phBg').onclick = close;
+  $('#phSave').onclick = () => saveSlide(i, $('#phSave'));
+  $('#phSend').onclick = async () => {
+    const text = ta.value;
+    if (canFiles) { try { await navigator.share({ files: [file], text, title: text.split('\n')[0] }); close(); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    /* no file sharing (desktop): a link can carry text only, so put the photo itself on the clipboard (Chrome/Edge/Safari accept PNG) and open WhatsApp with the caption — one Ctrl+V finishes the message; if the clipboard refuses, fall back to saving the file */
+    let onClip = false;
+    try { const png = await stampedBlob(i, 'image/png'); await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]); onClip = true; } catch (e) {}
+    if (!onClip) { saveBlob(blob, slideFile(i)); try { await navigator.clipboard.writeText(text); } catch (e) {} }
+    const a = document.createElement('a'); a.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text); a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); close();
+  };
+}); }
+function saveSlide(i, btn) { return busy(btn, async () => {
+  const blob = await stampedBlob(i); const file = new File([blob], slideFile(i), { type: 'image/jpeg' });
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (ios && canShareFiles(file)) { try { await navigator.share({ files: [file] }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  saveBlob(blob, slideFile(i));
+}); }
+/* Minimal ZIP writer (store, no compression — JPEGs do not compress) so the whole deck can be saved offline. */
+/* crc32() comes from the xlsx writer. */
+function zipStore(entries) { /* entries: [{name, data:Uint8Array}] */
+  const enc = new TextEncoder(); const parts = []; const cd = []; let off = 0; const d = new Date();
+  const dosT = ((d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1)) & 0xffff, dosD = (((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate()) & 0xffff;
+  const u16 = (v, b, o) => b.setUint16(o, v, true), u32 = (v, b, o) => b.setUint32(o, v, true);
+  for (const e of entries) {
+    const nm = enc.encode(e.name), crc = crc32(e.data), n = e.data.length;
+    const lh = new DataView(new ArrayBuffer(30)); u32(0x04034b50, lh, 0); u16(20, lh, 4); u16(0x800, lh, 6); u16(0, lh, 8); u16(dosT, lh, 10); u16(dosD, lh, 12); u32(crc, lh, 14); u32(n, lh, 18); u32(n, lh, 22); u16(nm.length, lh, 26); u16(0, lh, 28);
+    parts.push(lh.buffer, nm, e.data);
+    const ch = new DataView(new ArrayBuffer(46)); u32(0x02014b50, ch, 0); u16(20, ch, 4); u16(20, ch, 6); u16(0x800, ch, 8); u16(0, ch, 10); u16(dosT, ch, 12); u16(dosD, ch, 14); u32(crc, ch, 16); u32(n, ch, 20); u32(n, ch, 24); u16(nm.length, ch, 28); u16(0, ch, 30); u16(0, ch, 32); u16(0, ch, 34); u16(0, ch, 36); u32(0, ch, 38); u32(off, ch, 42);
+    cd.push(ch.buffer, nm); off += 30 + nm.length + n;
+  }
+  const cdLen = cd.reduce((a, b) => a + b.byteLength, 0);
+  const eo = new DataView(new ArrayBuffer(22)); u32(0x06054b50, eo, 0); u16(0, eo, 4); u16(0, eo, 6); u16(entries.length, eo, 8); u16(entries.length, eo, 10); u32(cdLen, eo, 12); u32(off, eo, 16); u16(0, eo, 20);
+  return new Blob([...parts, ...cd, eo.buffer], { type: 'application/zip' });
+}
+$('#dlAll').onclick = () => busy($('#dlAll'), async () => {
+  const btn = $('#dlAll'); const withOrig = SLIDES.map((s, i) => s.orig && ORIG[s.orig] ? i : -1).filter(i => i >= 0); const entries = [];
+  for (let k = 0; k < withOrig.length; k++) { btn.textContent = fmt(UI.preparing, { n: k + 1, t: withOrig.length }); const b = await stampedBlob(withOrig[k]); entries.push({ name: slideFile(withOrig[k]), data: new Uint8Array(await b.arrayBuffer()) }); }
+  entries.push({ name: 'README.txt', data: new TextEncoder().encode(`Tiger Stripe 老虎斑 — original slide photos\n${STAMP_CREDIT}\nManagement of 'Tiger stripe' symptoms in Musang King durian. Photos of the LED wall at the talk, perspective-corrected and numbered as in the app.\nData and photographs © the original authors and Can Tho University. App: ${APP_URL}\n`) });
+  const zip = zipStore(entries); const name = 'tigerstripe-original-slides.zip'; const file = new File([zip], name, { type: 'application/zip' });
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (ios && canShareFiles(file)) { try { await navigator.share({ files: [file] }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  saveBlob(zip, name);
+});
 /* Read before the first render, because rendering saves state (and would write the default language). */
 let hasLang = false; try { hasLang = LANGS.includes(localStorage.getItem('ts.lang')); } catch (e) {}
 renderAll();
